@@ -1,0 +1,48 @@
+# --- Agent workspace -------------------------------------------------------
+# Never committed: proposals, journals, fixtures, throwaway Firefox profiles,
+# harness output. See AGENTS.md → "Agent workspace".
+@local/
+
+# --- Operating system ------------------------------------------------------
+.DS_Store
+._*
+.AppleDouble
+Thumbs.db
+Desktop.ini
+*~
+
+# --- Editors / IDEs --------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+
+# --- AI agent state --------------------------------------------------------
+.claude/
+CLAUDE.local.md
+.cursor/
+.aider*
+
+# --- Node (planned @local tooling may pull this in at repo root) ----------
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Playwright / browser artifacts ----------------------------------------
+test-results/
+playwright-report/
+*.har
+*.trace.zip
+
+# --- Secrets / env ---------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# --- Misc ------------------------------------------------------------------
+*.log
+*.tmp
+*.bak
+*.orig
