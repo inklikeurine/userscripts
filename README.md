@@ -22,9 +22,7 @@ automatically from the same link.
 Scripts are grouped by the website they target. Each script lives in its own
 folder with its own README.
 
-### youtube
-
-- [hide-shorts](youtube/hide-shorts/) — Removes Shorts from the home feed, subscriptions, search results and the sidebar.
+_No scripts yet._
 
 ## License
 
