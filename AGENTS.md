@@ -69,14 +69,14 @@ replace it with any other license and do not add license headers to scripts.
 Scripts are nested two levels deep: a folder per website, and inside it a
 folder per script. No scripts at the repo root, no scripts directly inside a
 website folder, no shared libraries. The only top-level folder that is *not* a
-website is `@local/` — the agent workspace (see below).
+website is `.dev/` — the agent workspace (see below).
 
 ```text
 userscripts/
 ├── AGENTS.md
 ├── README.md
 ├── UNLICENSE
-├── @local/                    # agent workspace — not a website, never a script
+├── .dev/                    # agent workspace — not a website, never a script
 ├── <website>/
 │   ├── <script-name>/
 │   │   ├── README.md          # REQUIRED
@@ -100,11 +100,13 @@ userscripts/
   folder already says it.
 - The `.user.js` file inside uses the same name as its script folder.
 
-## Agent workspace: `@local/`
+## Agent workspace: `.dev/`
 
-`@local/` is the one place in this repo where an agent may work freely without
+`.dev/` is the one place in this repo where an agent may work freely without
 asking. Use it to test changes and to keep documentation for yourself. It is
-gitignored as a whole, so nothing in it is published. What lives there:
+gitignored by this repo and is its own **private** git repository
+(`inklikeurine/userscripts-dev`), nested inside the public one, so nothing in
+it is published. What lives there:
 
 - `tools/` — `check.mjs`, the validator that enforces every mechanical rule in
   this file; `new-script.mjs`, a scaffolder that lays down a new script from
@@ -119,33 +121,38 @@ gitignored as a whole, so nothing in it is published. What lives there:
 - `review/` — per script, `review/<website>/<script-name>/`: `journal.md`, the
   verification journal appended to on every change, and `harness.json`, the
   saved harness invocation that backs an **Automated Test** tick
-  (`node @local/harness/run.mjs <script> --spec` re-runs it). See
+  (`node .dev/harness/run.mjs <script> --spec` re-runs it). See
   **Verification** below.
 - `fixtures/`, `profiles/`, `out/` — saved page HTML, throwaway browser
   profiles, harness output. Never PII; never a logged-in page.
 
 Rules:
 
-- `@local/` is **not** a website folder. Never put a userscript in it and never
+- `.dev/` is **not** a website folder. Never put a userscript in it and never
   list it in the root `README.md` **Userscripts** section.
-- Nothing under `<website>/` may depend on anything in `@local/`. Scripts stay
+- Nothing under `<website>/` may depend on anything in `.dev/`. Scripts stay
   self-contained and installable on their own.
 - The "no `package.json` / linter / CI" rule applies to the repo root and to
-  script folders. Tooling inside `@local/` may have whatever it needs.
-- `@local/` is **ignored by git in its entirety** (see `.gitignore`). Nothing
-  in it is ever committed — it is scratch space local to the machine, not part
-  of the published repo. Expect it to be absent on a fresh clone; when it is,
-  every rule in this file still applies, done by hand.
+  script folders. Tooling inside `.dev/` may have whatever it needs.
+- `.dev/` is **ignored by this repo in its entirety** (see `.gitignore`) and
+  committed only to its own private repository. On a fresh clone it is absent
+  until cloned in (`git clone https://github.com/inklikeurine/userscripts-dev .dev`,
+  then `npm install` in `.dev/harness/`); when it is absent, every rule in
+  this file still applies, done by hand.
+- `.claude/settings.json` (the permission allow-list and the `PostToolUse`
+  hook that runs the validator after every edit) and `CLAUDE.md` (which
+  imports this file) are **committed** in the public repo, so a fresh clone
+  keeps its guard rail. The hook skips quietly when `.dev/` is absent.
 - The no-PII rule still applies even though the folder is untracked. Don't
   leave logged-in page fixtures or browser profiles lying around.
-- Keep `@local/README.md` current so the next agent (or human) can find things.
+- Keep `.dev/README.md` current so the next agent (or human) can find things.
 
 ## Per-userscript requirements
 
 ### `README.md` (REQUIRED in every script folder)
 
 A script folder without a `README.md` is incomplete. Never commit one. Start
-from `@local/templates/README.md`. Each README must contain:
+from `.dev/templates/README.md`. Each README must contain:
 
 1. **Title** — the script name.
 2. **What it does** — one or two paragraphs in plain language.
@@ -163,7 +170,7 @@ from `@local/templates/README.md`. Each README must contain:
 ### `<script-name>.user.js`
 
 - Must begin with a valid userscript metadata block (`// ==UserScript==` …
-  `// ==/UserScript==`). Start from `@local/templates/script.user.js`.
+  `// ==/UserScript==`). Start from `.dev/templates/script.user.js`.
 - Required metadata keys: `@name`, `@namespace`, `@version`, `@description`,
   `@match` (one or more), `@grant`, `@run-at`, `@homepageURL`, `@supportURL`,
   `@downloadURL`, `@updateURL`. The URL keys take exactly the values in
@@ -184,7 +191,7 @@ from `@local/templates/README.md`. Each README must contain:
 ### Writing the script
 
 Structure is only half the job. AI-written userscripts fail in the same five
-ways; the long version with examples is `@local/notes/patterns.md`.
+ways; the long version with examples is `.dev/notes/patterns.md`.
 
 - **SPA navigation.** YouTube, GitHub, Reddit and most large sites do not
   reload the page. A script that runs once at `document-idle` works on the
@@ -223,14 +230,14 @@ not.
 
 ## Workflow for adding a script
 
-0. Run `node @local/tools/new-script.mjs <website> <script-name> "<description>"`
+0. Run `node .dev/tools/new-script.mjs <website> <script-name> "<description>"`
    if the tools exist. It performs steps 1–5 from the templates. Otherwise:
 1. Create `<website>/` if it does not already exist.
 2. Create `<website>/<script-name>/`.
-3. Copy `@local/templates/script.user.js` to
+3. Copy `.dev/templates/script.user.js` to
    `<website>/<script-name>/<script-name>.user.js`, fill in the placeholders,
    `@version 1.00`.
-4. Copy `@local/templates/README.md` to `<website>/<script-name>/README.md`
+4. Copy `.dev/templates/README.md` to `<website>/<script-name>/README.md`
    and fill in every required section above.
 5. Add the script under the correct website heading in the root `README.md`
    **Userscripts** list, creating the heading if this is the site's first
@@ -263,13 +270,13 @@ into three checks. Report each one as ticked or unticked, using these exact
 names, and never tick one you did not do:
 
 - **Validated** — static checks only: layout, README sections, root README
-  in sync, metadata, `node --check`. Run `node @local/tools/check.mjs`; if
+  in sync, metadata, `node --check`. Run `node .dev/tools/check.mjs`; if
   it is absent, do every item by hand.
 - **Automated Test** — the script was injected into a Firefox engine via
-  `node @local/harness/run.mjs` (if it exists) at its declared `@run-at`,
+  `node .dev/harness/run.mjs` (if it exists) at its declared `@run-at`,
   with a `GM_*` shim honouring its `@grant` list; no uncaught errors and the
   stated effect was observed. If not run, say why. `check.mjs` accepts this
-  tick only when `@local/out/<script-name>/result.json` records a passing run
+  tick only when `.dev/out/<script-name>/result.json` records a passing run
   of the current source at the current `@version`.
 - **Manual Review** — real Firefox + Violentmonkey, by a human, walking the
   list in the report. An agent never ticks this.
@@ -294,7 +301,7 @@ A script change is done when all of these are true:
    it was not (no harness, site requires login, fixture unavailable, …).
 5. **Report** — the verification report below is the last thing in your
    final message, and a copy is appended under a dated heading to
-   `@local/review/<website>/<script-name>/journal.md` (create the file if
+   `.dev/review/<website>/<script-name>/journal.md` (create the file if
    this is the script's first change).
 
 Items 1–3 are **Validated** — `check.mjs` exits 0 exactly when they hold.
@@ -311,7 +318,7 @@ Exact shape:
 - [x] Validated
 - [ ] Automated Test — not run: <reason>
       (or: [x] Automated Test — <url or fixture>, <what was asserted>,
-       screenshots in @local/out/<script-name>/)
+       screenshots in .dev/out/<script-name>/)
 - [ ] Manual Review
 
 Checked by agent:

@@ -1,7 +1,8 @@
 # --- Agent workspace -------------------------------------------------------
-# Never committed: proposals, journals, fixtures, throwaway Firefox profiles,
-# harness output. See AGENTS.md → "Agent workspace".
-@local/
+# Never committed here: it is its own private repository
+# (inklikeurine/userscripts-dev: tools, harness, tests, journals, notes,
+# throwaway Firefox profiles, harness output). See AGENTS.md → "Agent workspace".
+.dev/
 
 # --- Operating system ------------------------------------------------------
 .DS_Store
@@ -19,12 +20,15 @@ Desktop.ini
 *.sublime-workspace
 
 # --- AI agent state --------------------------------------------------------
-.claude/
+# .claude/settings.json (hook + permissions) and CLAUDE.md are committed on
+# purpose: a fresh clone keeps its guard rail. Per-user files are not.
+.claude/*
+!.claude/settings.json
 CLAUDE.local.md
 .cursor/
 .aider*
 
-# --- Node (planned @local tooling may pull this in at repo root) ----------
+# --- Node (never at the repo root; .dev/ has its own) ----------------------
 node_modules/
 npm-debug.log*
 yarn-error.log*
