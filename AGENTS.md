@@ -120,8 +120,10 @@ it is published. What lives there:
 - `harness/` — Playwright + headless Firefox runner with a `GM_*` shim.
 - `notes/` — shared knowledge: `patterns.md` (how to write a userscript that
   survives contact with a real site), `gm-api.md` (Violentmonkey API notes),
-  `sites/<website>.md` (dated DOM/selector notes per site). Date your
-  entries; site knowledge goes stale.
+  `sites/<website>.md` (dated DOM/selector notes per site), `ideas.md`
+  (planned scripts), `status.md` (where we are / what's next / waiting on
+  the owner — overwritten at the end of every session). Date your entries;
+  site knowledge goes stale.
 - `review/` — per script, `review/<website>/<script-name>/`: `journal.md`, the
   verification journal appended to on every change, and `harness.json`, the
   saved harness invocation that backs an **Automated Test** tick
@@ -150,6 +152,9 @@ Rules:
 - The no-PII rule still applies even though the folder is untracked. Don't
   leave logged-in page fixtures or browser profiles lying around.
 - Keep `.dev/README.md` current so the next agent (or human) can find things.
+- **Before ending a session, overwrite `.dev/notes/status.md`** — where we
+  are, what's next, what is waiting on the owner. It is how a repo gets
+  picked up cold.
 
 ## Per-userscript requirements
 
