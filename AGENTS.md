@@ -96,9 +96,13 @@ userscripts/
   `youtube`, `github`, `reddit`. One folder per site; reuse it for every
   script targeting that site.
 - **Script folder**: lowercase, hyphen-separated, describing what the script
-  does — `hide-shorts`, `wide-diff`. Do not repeat the site name; the parent
+  does — `hide-sidebar`, `wide-diff`. Do not repeat the site name; the parent
   folder already says it.
 - The `.user.js` file inside uses the same name as its script folder.
+- An **empty website folder** is a placeholder for a site with scripts still
+  to come. It holds nothing, is not listed in the root `README.md`, and —
+  since git keeps no empty folders — exists only on the machine it was made
+  on; the plan itself lives in `.dev/notes/ideas.md`.
 
 ## Agent workspace: `.dev/`
 
@@ -260,8 +264,9 @@ not.
 
 1. Delete `<website>/<script-name>/`.
 2. Remove its entry from the root `README.md`.
-3. If the website folder is now empty, delete it and remove its heading from
-   the root `README.md`.
+3. Remove the website's heading from the root `README.md` if it has no
+   scripts left. The empty folder may stay as a placeholder for a planned
+   script (see **Folder naming**) or be deleted.
 
 ## Verification
 
