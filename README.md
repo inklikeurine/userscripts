@@ -22,7 +22,9 @@ automatically from the same link.
 Scripts are grouped by the website they target. Each script lives in its own
 folder with its own README.
 
-_No scripts yet._
+### sonarr
+
+- [Quick Tags](sonarr/quick-tags/) — A green tag button next to Links on a Sonarr series page; add or remove tags in a small box, saved instantly.
 
 ## License
 
