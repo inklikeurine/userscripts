@@ -22,6 +22,10 @@ automatically from the same link.
 Scripts are grouped by the website they target. Each script lives in its own
 folder with its own README.
 
+### any-site
+
+- [Magnet Grabber](any-site/magnet-grabber/) — Copy magnet links to the clipboard on click instead of opening a torrent client.
+
 ### sonarr
 
 - [Quick Tags](sonarr/quick-tags/) — A green tag button next to Links on a Sonarr series page; add or remove tags in a small box, saved instantly.
