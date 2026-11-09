@@ -1,7 +1,7 @@
 # --- Agent workspace -------------------------------------------------------
 # Never committed here: it is its own private repository
 # (inklikeurine/userscripts-dev: tools, harness, tests, journals, notes,
-# throwaway Firefox profiles, harness output). See AGENTS.md → "Agent workspace".
+# throwaway Firefox profiles, harness output). See .dev/AGENTS.md.
 .dev/
 
 # --- Operating system ------------------------------------------------------
