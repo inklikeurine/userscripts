@@ -22,7 +22,7 @@ explained so that someone who won't read the code can try it.
 
 ```text
 userscripts/
-├── AGENTS.md  CLAUDE.md  README.md  UNLICENSE  .gitignore  .claude/
+├── AGENTS.md  CLAUDE.md  README.md  UNLICENSE  .gitignore  .claude/  .github/
 ├── <website>/
 │   └── <script-name>/
 │       ├── README.md
@@ -168,6 +168,8 @@ never a one-digit Minor (`1.0`).
 A new script's first pull request adds it at `1.00`.
 
 ## Your pull request
+
+Fill in the pull request template (`.github/pull_request_template.md`):
 
 - **One fix or feature per pull request.**
 - **Say which AI tool wrote it**, and roughly how much of it.
